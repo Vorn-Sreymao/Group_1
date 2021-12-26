@@ -1,5 +1,6 @@
 import tkinter as tk
-# import winsound
+from typing import Counter
+import winsound
 # import random
 # from tkinter.constants import NW, W
 root = tk.Tk()
@@ -7,49 +8,70 @@ root.geometry("1600x700")
 frame = tk.Frame()
 frame.master.title("Python VC1")
 canvas = tk.Canvas(frame)
-#hello 
+
 #________________________________________Array2D Of Grid(Sreymao and Theara)_______________________________________
 array2D = [
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-            [1, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
-            [1, 0, 1, 0, 0, 2, 0, 2, 0, 2, 0, 2, 0, 0, 3, 1, 0, 1, 3, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 1, 3, 0, 0, 2, 0, 2, 0, 2, 0, 2, 0, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1, 3, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 2, 0, 2, 0, 0, 0, 1, 2, 1, 0, 0, 0, 2, 0, 0, 1, 4, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1, 0, 1, 0, 0, 2, 0, 2, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 3, 1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 4, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 2, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1, 2, 0, 1, 0, 0, 2, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 1, 2, 0, 1, 2, 0, 2, 0, 1, 0, 2, 0, 0, 1, 0, 1],
-            [1, 2, 1, 0, 1, 0, 0, 1, 0, 2, 0, 2, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 2, 0, 2, 0, 1, 2, 0, 1, 0, 2, 0, 0, 1, 0, 2, 0, 0, 1, 2, 1],
-            [1, 2, 1, 0, 1, 0, 0, 0, 0, 0, 2, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 1, 2, 1],
-            [1, 2, 1, 0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 4, 0, 0, 1, 0, 2, 2, 0, 0, 0, 0, 1, 0, 2, 0, 0, 1, 2, 1],
-            [1, 2, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 2, 0, 0, 1, 2, 1],
-            [1, 2, 1, 0, 0, 0, 2, 2, 2, 2, 0, 0, 2, 0, 0, 0, 0, 3, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1],
-            [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 2, 0, 2, 0, 0, 1, 0, 0, 1, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 1, 0, 1],
-            [1, 0, 1, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 4, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 1, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
             [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
-            [1, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 1, 6, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
+            [1, 0, 1, 0, 1, 3, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
+            [1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 2, 0, 2, 0, 0, 0, 1, 2, 1, 0, 0, 0, 2, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1],
+            [1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1, 0, 1, 0, 0, 2, 0, 2, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 3, 1, 0, 1, 0, 1],
+            [1, 0, 1, 0, 4, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 2, 0, 0, 1, 0, 0, 0, 2, 0, 1, 0, 2, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1],
+            [1, 0, 1, 1, 1, 2, 0, 1, 0, 0, 2, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 2, 0, 1, 2, 0, 2, 0, 1, 0, 2, 0, 0, 1, 0, 1],
+            [1, 0, 1, 0, 1, 0, 0, 1, 0, 2, 0, 2, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 2, 1, 2, 0, 3, 2, 0, 1, 0, 2, 0, 0, 1, 0, 2, 0, 0, 1, 0, 1],
+            [1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 2, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 1, 0, 1],
+            [1, 0, 1, 2, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 1, 0, 0, 1, 0, 2, 2, 0, 0, 0, 0, 1, 0, 2, 0, 0, 1, 0, 1],
+            [1, 0, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 2, 0, 0, 1, 0, 1],
+            [1, 0, 1, 2, 0, 0, 2, 2, 2, 2, 0, 0, 2, 0, 0, 0, 0, 3, 1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
+            [1, 0, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 2, 0, 2, 0, 0, 1, 0, 0, 1, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 1, 0, 1],
+            [1, 0, 1, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 3, 1, 0, 0, 1, 3, 0, 0, 4, 2, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
+            [1, 0, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
+            [1, 0, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 2, 0, 2, 0, 2, 0, 0, 0, 0, 0, 1, 0, 1],
+            [1, 0, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 2, 0, 2, 0, 0, 0, 0, 0, 5, 1, 0, 1],
+            [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     ]
+
+#___________________________________Background Image_____________________________________
+bg_img = tk.PhotoImage(file="images/bg.png")
+canvas.create_image(600, 370, image=bg_img)
+
 #____________________________________User Image__________________________________________
 
-mario_img = tk.PhotoImage(file="images/mario.png")
-
+mario_img = tk.PhotoImage(file="images/mario1.png")
 #_____________________________________Images______________________________________________
 wall_img = tk.PhotoImage(file="images/box.png")
 coin_img = tk.PhotoImage(file="images/coin.png")
-home_img = tk.PhotoImage(file="images/home.png")
+home_img = tk.PhotoImage(file="images/door.png")
 fire_img = tk.PhotoImage(file="images/red.png")
-#_____________________________________Enemy image_________________________________________
+winner_img = tk.PhotoImage(file="images/won.png")
+lost_img = tk.PhotoImage(file="images/lost.png")
 
-enemy_img = tk.PhotoImage(file="images/ufo.png")
+#_____________________________________Enemy image________________________________________________
 
+enemy_img = tk.PhotoImage(file="images/monster.png")
+
+#____________________________________Sound________________________________________________________
+winsound.PlaySound("sound/start.wav",winsound.SND_FILENAME | winsound.SND_ASYNC )
+
+# ___________________________________sumOfscore___________________________________________________
+#____________________________________Theara_______________________________________________________
+count =0
+def sumOfscore():
+    index = 0
+    for row in range(len(array2D)):
+        for col in range(len(array2D[row])):
+            if array2D[row][col] == 6:
+                index = (row,col)
+    return index
 #_____________________________________Graphic of array2D__________________________________________
 def drawGrid():
-    global array2D
+    global array2D,count,coin
+    index = sumOfscore()
     for row in range(len(array2D)):
         for col in range(len(array2D[row])):
             if array2D[row][col] == 1:
@@ -63,78 +85,180 @@ def drawGrid():
 
             elif array2D[row][col] == 4:
                 canvas.create_image(15+(30*col),15+(30*row),image = fire_img)
+                
+            elif array2D[row][col] == 5:
+                canvas.create_image(15+(30*col),15+(30*row),image = home_img)
 
             elif array2D[row][col] == 6:
                 canvas.create_image(15+(30*col),15+(30*row),image = mario_img)
+    canvas.create_text(100,50, text="Point: "+str(count),font=('Arial', 20))  
+    if array2D[index[0]][index[1]+1]==2 or array2D[index[0]][index[1]-1]==2 or array2D[index[0]+1][index[1]]==2 or array2D[index[0]-1][index[1]]==2: 
+        count += 10          
 drawGrid()
 
-#__________________________________Move user____________________________________________________
-def moveUp(event):
-    global array2D
-    canvas.delete("all")
-    isTrue = True
-    for row in range(len(array2D)):
-        for col in range(len(array2D)):
-            if array2D[row][col] == 6 and row > 0 and isTrue:
-                array2D[row][col] = 0
-                array2D[row-1][col] = 6
-                isTrue = False            
+#__________________________________Move position of  user____________________________________________________ 
 
-    canvas.create_image(15+(30*col),15+(30*row),image = mario_img)
-    drawGrid()
+#_________________________________Theara_____________________________________________________________________
 
-# ----------------------------------Move Down--------------------------------    
-
-def moveDown(event):
-    global array2D
-    canvas.delete("all")
-    isTrue = True
-    for row in range(len(array2D)):
-        for col in range(len(array2D)):
-            if array2D[row][col] == 6 and row < len(array2D) - 1 and isTrue:
-                array2D[row][col] = 0
-                array2D[row+1][col] = 6
-                isTrue = False
-                
-    canvas.create_image(15+(30*col),15+(30*row),image = mario_img)
-    drawGrid()
-#sreymao
-# ---------------------------------Move RIGHT-----------------------------------
-
-def moveLeft(event):
-    global array2D
-    canvas.delete("all")
-    isTrue = True
-    for row in range(len(array2D)):
-        for col in range(len(array2D)):
-            if array2D[row][col] == 6 and col > 0 and isTrue:
-                array2D[row][col] = 0
-                array2D[row][col-1] = 6
-                isTrue = False        
-    canvas.create_image(15+(30*col),15+(30*row),image = mario_img)
-    drawGrid()
-
-# ---------------------------------Move LEFT----------------------------------------
-
+# _________________________________Move Right________________________________________________________________  
+def getIndex(array2D):
+     for row in range(len(array2D)):
+          for col in range(len(array2D[row])):
+               if array2D[row][col] == 6:
+                    postion=[row, col]
+     return postion
+    
 def moveRight(event):
-    global array2D
-    canvas.delete("all")
-    isTrue = True
-    for row in range(len(array2D)):
-        for col in range(len(array2D)):
-            if array2D[row][col] == 6 and col < len(array2D) - 1 and isTrue:
-                array2D[row][col] = 0
-                array2D[row][col+1] = 6
-                isTrue = False
+    position = getIndex(array2D)
+    row = position[0]
+    col = position[1]
+    if array2D[row][col+1] != 3 and array2D[row][col+1] != 4:
+        if array2D[row][col+1] == 2:
+            array2D[row][col] = 0
+            array2D[row][col+1] = 6
+            coin()
+        elif array2D[row][col+1] == 5:
+            canvas.delete("all")
+            youWin()
+            array2D[row][col] = 0
+            array2D[row][col+1] = 6
+        elif array2D[row][col+1]!= 1:
+            array2D[row][col]= 0
+            array2D[row][col+1]=6
+            canvas.delete("all")
+    if array2D[row][col+1] == 3:
+        canvas.delete("all")
+        array2D[row][col] = 0
+        array2D[row][col+1] = 6
+        youLost()
+    canvas.create_image(600, 370, image=bg_img)
     drawGrid()
     
+# ______________________________Move Left______________________________________
+
+def moveLeft(event):
+    position = getIndex(array2D)
+    row = position[0]
+    col = position[1]
+    if array2D[row][col-1] != 3 and array2D[row][col-1] != 4:
+        if array2D[row][col-1] == 2:
+            array2D[row][col] = 0
+            array2D[row][col-1] = 6
+            coin()
+        elif array2D[row][col-1] == 5:
+            canvas.delete("all")
+            youWin()
+            array2D[row][col] = 0
+            array2D[row][col-1] = 6
+        elif array2D[row][col-1]!= 1:
+            array2D[row][col]= 0
+            array2D[row][col-1]=6
+            canvas.delete("all")
+    if array2D[row][col-1] == 3:
+        canvas.delete("all")
+        array2D[row][col] = 0
+        array2D[row][col-1] = 6
+        youLost()
+    canvas.create_image(600, 370, image=bg_img)
+    drawGrid()
+
+#________________________________Sreymao___________________________________________________
+#_________________________________Move Up__________________________________________________
+
+def moveUp(event):
+    position = getIndex(array2D)
+    row = position[0]
+    col = position[1]
+    if array2D[row-1][col] != 3 and array2D[row-1][col] != 4:
+        if array2D[row-1][col] == 2:
+            array2D[row][col] = 0
+            array2D[row-1][col] = 6
+            coin()
+        elif array2D[row-1][col] == 5:
+            canvas.delete("all")
+            youWin()
+            array2D[row][col] = 0
+            array2D[row-1][col] = 6
+        elif array2D[row-1][col]!= 1:
+            array2D[row][col]= 0
+            array2D[row-1][col]=6
+            canvas.delete("all")
+    if array2D[row-1][col] == 3:
+        canvas.delete("all")
+        array2D[row][col] = 0
+        array2D[row-1][col] = 6
+        youLost()
+    canvas.create_image(600, 370, image=bg_img)
+    drawGrid()
+    
+# _______________________________Move Down______________________________________   
+
+def moveDown(event):
+    position = getIndex(array2D)
+    row = position[0]
+    col = position[1]
+    if array2D[row+1][col] != 3 and array2D[row+1][col] != 4:
+        if array2D[row+1][col] == 2:
+            array2D[row][col] = 0
+            array2D[row+1][col] = 6
+            coin()
+        elif array2D[row+1][col] == 5:
+            canvas.delete("all")
+            youWin()
+            array2D[row][col] = 0
+            array2D[row+1][col] = 6
+        elif array2D[row+1][col]!= 1:
+            array2D[row][col]= 0
+            array2D[row+1][col]=6
+            canvas.delete("all")
+    if array2D[row+1][col] == 3:
+        canvas.delete("all")
+        array2D[row][col] = 0
+        array2D[row+1][col] = 6
+        youLost()
+    canvas.create_image(600, 370, image=bg_img)
+    drawGrid()
+    
+    
+#___________________________________Coin________________________________________________________
+#___________________________________Theara______________________________________________________
+def coin() :
+    global count
+    winsound.PlaySound("sound\\coin.wav", winsound.SND_ASYNC | winsound.SND_ASYNC)
+  
+
+#_____________________________________You won or You Lost________________________________________
+
+#_____________________________________Sreymao____________________________________________________
+
+#_____________________________________You Win____________________________________________________
+def youWin() :
+    global canvas
+    canvas.create_image(700,400,image = winner_img)
+    my_text=canvas.create_text(700, 300, text="You Won!!!🙌🙌", font=("pursor", 50), tags="id")
+    canvas.itemconfig(my_text)
+    winsound.PlaySound("sound\\vanda.wav", winsound.SND_ASYNC | winsound.SND_ASYNC)
+    canvas = root.geometry("1600x680")  
+    print('You win')
+
+#_____________________________________You Lost__________________________________________________
+def youLost() :
+    global canvas
+    my_text=canvas.create_text(700, 300, text="You LOST!!", font=("pursor", 50), tags="id")
+    canvas.itemconfig(my_text)
+    winsound.PlaySound("sound\\gameover.wav", winsound.SND_ASYNC | winsound.SND_ASYNC)
+    canvas= root.geometry("1600x680")
+
+#____________________________________Move Position Player_______________________________________
 
 root.bind("<Right>", moveRight)
 root.bind("<Left>", moveLeft)
 root.bind("<Up>", moveUp)
 root.bind("<Down>", moveDown)
 
+#__________________________________Pack to show windows_________________________________________
 
 canvas.pack(expand=True, fill='both')
 frame.pack(expand=True, fill='both')
 root.mainloop()
+
