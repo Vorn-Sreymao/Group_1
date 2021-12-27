@@ -58,20 +58,27 @@ enemy_img = tk.PhotoImage(file="images/monster.png")
 #____________________________________Sound________________________________________________________
 winsound.PlaySound("sound/start.wav",winsound.SND_FILENAME | winsound.SND_ASYNC )
 
-# ___________________________________sumOfscore___________________________________________________
+# ___________________________________getIndex___________________________________________________
 #____________________________________Theara_______________________________________________________
 count =0
-def sumOfscore():
+def getIndexOfscore():
     index = 0
     for row in range(len(array2D)):
         for col in range(len(array2D[row])):
             if array2D[row][col] == 6:
                 index = (row,col)
     return index
+# ______________________________________SUM OF SCORE______________________________________________
+def sumOfscore():
+    global count
+    index = getIndexOfscore()
+    if array2D[index[0]][index[1]+1]==2 or array2D[index[0]][index[1]-1]==2 or array2D[index[0]+1][index[1]]==2 or array2D[index[0]-1][index[1]]==2: 
+        winsound.PlaySound("sound\\coin.wav", winsound.SND_ASYNC | winsound.SND_ASYNC)
+        count += 10
+    return count 
 #_____________________________________Graphic of array2D__________________________________________
 def drawGrid():
-    global array2D,count,coin
-    index = sumOfscore()
+    global array2D,count,coin,sumOfscore
     for row in range(len(array2D)):
         for col in range(len(array2D[row])):
             if array2D[row][col] == 1:
@@ -91,9 +98,7 @@ def drawGrid():
 
             elif array2D[row][col] == 6:
                 canvas.create_image(15+(30*col),15+(30*row),image = mario_img)
-    canvas.create_text(100,50, text="Point: "+str(count),font=('Arial', 20))  
-    if array2D[index[0]][index[1]+1]==2 or array2D[index[0]][index[1]-1]==2 or array2D[index[0]+1][index[1]]==2 or array2D[index[0]-1][index[1]]==2: 
-        count += 10          
+    canvas.create_text(150,50, text="Your score: "+str(sumOfscore()),font=('Arial', 20))  
 drawGrid()
 
 #__________________________________Move position of  user____________________________________________________ 
@@ -116,7 +121,7 @@ def moveRight(event):
         if array2D[row][col+1] == 2:
             array2D[row][col] = 0
             array2D[row][col+1] = 6
-            coin()
+            sumOfscore()
         elif array2D[row][col+1] == 5:
             canvas.delete("all")
             youWin()
@@ -144,7 +149,7 @@ def moveLeft(event):
         if array2D[row][col-1] == 2:
             array2D[row][col] = 0
             array2D[row][col-1] = 6
-            coin()
+            sumOfscore()
         elif array2D[row][col-1] == 5:
             canvas.delete("all")
             youWin()
@@ -173,7 +178,7 @@ def moveUp(event):
         if array2D[row-1][col] == 2:
             array2D[row][col] = 0
             array2D[row-1][col] = 6
-            coin()
+            sumOfscore()
         elif array2D[row-1][col] == 5:
             canvas.delete("all")
             youWin()
@@ -201,7 +206,7 @@ def moveDown(event):
         if array2D[row+1][col] == 2:
             array2D[row][col] = 0
             array2D[row+1][col] = 6
-            coin()
+            sumOfscore()
         elif array2D[row+1][col] == 5:
             canvas.delete("all")
             youWin()
@@ -220,11 +225,6 @@ def moveDown(event):
     drawGrid()
     
     
-#___________________________________Coin________________________________________________________
-#___________________________________Theara______________________________________________________
-def coin() :
-    global count
-    winsound.PlaySound("sound\\coin.wav", winsound.SND_ASYNC | winsound.SND_ASYNC)
   
 
 #_____________________________________You won or You Lost________________________________________
@@ -235,8 +235,9 @@ def coin() :
 def youWin() :
     global canvas
     canvas.create_image(700,400,image = winner_img)
-    my_text=canvas.create_text(700, 300, text="You Won!!!🙌🙌", font=("pursor", 50), tags="id")
+    my_text=canvas.create_text(700, 300, text="🙌You Won!!!🙌", font=("pursor", 50), tags="id")
     canvas.itemconfig(my_text)
+    canvas.create_text(700,400, text="🤗Totel Of Score:"+str(sumOfscore()),font=('Arial', 20))  
     winsound.PlaySound("sound\\vanda.wav", winsound.SND_ASYNC | winsound.SND_ASYNC)
     canvas = root.geometry("1600x680")  
     print('You win')
