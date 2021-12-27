@@ -1,7 +1,7 @@
 import tkinter as tk
 from typing import Counter
 import winsound
-# import random
+import random
 # from tkinter.constants import NW, W
 root = tk.Tk()
 root.geometry("1600x700")
@@ -49,7 +49,7 @@ coin_img = tk.PhotoImage(file="images/coin.png")
 home_img = tk.PhotoImage(file="images/door.png")
 fire_img = tk.PhotoImage(file="images/red.png")
 winner_img = tk.PhotoImage(file="images/won.png")
-lost_img = tk.PhotoImage(file="images/lost.png")
+lost_img = tk.PhotoImage(file="images/lost .png")
 
 #_____________________________________Enemy image________________________________________________
 
@@ -223,7 +223,69 @@ def moveDown(event):
         youLost()
     canvas.create_image(600, 370, image=bg_img)
     drawGrid()
+
+#____________________________________Move Monster________________________________________________
+moveMonster = []
+def moveMonster(array2D):
+    monster = []
+    for row in range(len(array2D)):
+        for col in range(len(array2D[row])):
+            if array2D[row][col] == 3:
+                monster.append([row,col])
+    print(monster)
+    return monster
     
+def moveMonsterInGrid(array2D, right, col):
+    move = []
+    if (array2D[right][col-1] == 0):
+        move.append("Left")
+    elif (array2D[right][col+1] == 0):
+        move.append("Right")
+    elif (array2D[right-1][col] == 0):
+        move.append("Up")
+    elif (array2D[right+1][col] == 0):
+        move.append("Down")
+    return move
+
+def canMoveMonster():
+    global array2D
+    getindexMonster = moveMonster(array2D)
+    print(getindexMonster)
+    for enemy in getindexMonster:
+        row = enemy[0]
+        col = enemy[1]
+        # print(row, col)
+        monsters = moveMonsterInGrid(array2D, row, col)
+        # print(monsters)
+        
+        if len(monsters) > 3:
+            move = random.choice(monsters)
+            print(move)
+         
+        if move == "Left":
+            if array2D[row][col-1] == 0 and array2D[row][col] != 6:
+                array2D[row][col] == 0
+                array2D[row][col-1] == 3
+                
+        if move == "Right":      
+            if array2D[row][col+1] == 0 and array2D[row][col+1] != 6:
+                array2D[row][col] == 0
+                array2D[row][col+1] == 3
+        
+        if move == "Up":        
+            if array2D[row-1][col] == 0 and array2D[row-1][col] != 6:
+                array2D[row][col] == 0
+                array2D[row-1][col] == 3
+        
+        if move == "Down":       
+            if array2D[row+1][col] == 0 and array2D[row+1][col] != 6:
+                array2D[row][col] == 0
+                array2D[row+1][col] == 3
+    drawGrid()
+    canvas.after(50, canMoveMonster)
+canvas.after(50, canMoveMonster)
+# canvas.delete("all")
+drawGrid()
     
   
 
@@ -245,6 +307,7 @@ def youWin() :
 #_____________________________________You Lost__________________________________________________
 def youLost() :
     global canvas
+    canvas.create_image(700,300,image = lost_img)
     my_text=canvas.create_text(700, 300, text="You LOST!!", font=("pursor", 50), tags="id")
     canvas.itemconfig(my_text)
     winsound.PlaySound("sound\\gameover.wav", winsound.SND_ASYNC | winsound.SND_ASYNC)
