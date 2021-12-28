@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import font
+from tkinter import Canvas, font
 from typing import Counter
 import winsound
 import random
@@ -58,7 +58,7 @@ winsound.PlaySound("sound/start.wav",winsound.SND_FILENAME | winsound.SND_ASYNC 
 
 #_____________________________________Graphic of array2D__________________________________________
 def drawGrid():
-    global array2D,count,buttonPlay
+    global array2D,count
     canvas.create_image(600, 370, image=bgimg)
     canvas.create_text(100, 60, text="Your Score: " +str(count), font=("", 12))
     for row in range(len(array2D)):
@@ -87,6 +87,7 @@ drawGrid()
 
 #_________________________________Theara_____________________________________________________________________
 
+
 # _________________________________Move Right________________________________________________________________  
 def getIndex(array2D):
      for row in range(len(array2D)):
@@ -94,6 +95,8 @@ def getIndex(array2D):
                if array2D[row][col] == 6:
                     postion=[row, col]
      return postion
+
+
  
 #__________________________________________PLAYER FOR MOVE RIGHT LEFT UP DOWN________________________
 
@@ -107,30 +110,31 @@ def move(direction):
 
     if gameNotOver :
         if direction == 'right':
+            canvas.delete("all")
             nextRow = playerRow
             nextColumn = playerColumn + 1
-
         elif direction == 'left':
+            canvas.delete("all")
             nextRow = playerRow
             nextColumn = playerColumn - 1
-
         elif direction == 'up':
+            canvas.delete("all")
             nextRow = playerRow -1
             nextColumn = playerColumn 
-
         elif direction == 'down':
+            canvas.delete("all")
             nextRow = playerRow +1
             nextColumn = playerColumn 
-    
-        if  array2D[nextRow][nextColumn] != 1 :
+        if  array2D[nextRow][nextColumn] != 1 and array2D[nextRow][nextColumn] != 4:
             
             #____________________________MANAGE THE COIN_______________________________________________
             if array2D[nextRow][nextColumn] == 2:
+                canvas.delete("all")
                 count+= 10
                 winsound.PlaySound("sound\\coin.wav", winsound.SND_ASYNC | winsound.SND_ASYNC)
 
             #_____________________________MANAGE THE ANAMY ____________________________________________
-            elif array2D[nextRow][nextColumn] == 3:
+            if array2D[nextRow][nextColumn] == 3:
                 canvas.delete("all")
                 youLost()
                 
